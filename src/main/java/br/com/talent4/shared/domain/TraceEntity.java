@@ -1,4 +1,4 @@
-package br.com.talent4.domain.shared;
+package br.com.talent4.shared.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

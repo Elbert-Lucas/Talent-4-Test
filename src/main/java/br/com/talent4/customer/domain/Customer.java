@@ -1,6 +1,6 @@
-package br.com.talent4.domain.customer;
+package br.com.talent4.customer.domain;
 
-import br.com.talent4.domain.shared.TraceEntity;
+import br.com.talent4.shared.domain.TraceEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

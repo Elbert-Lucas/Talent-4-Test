@@ -1,9 +1,7 @@
-package br.com.talent4.domain.customer;
+package br.com.talent4.customer.domain;
 
 
-import br.com.talent4.domain.shared.TraceEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import br.com.talent4.shared.domain.TraceEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,11 +15,6 @@ public class Address extends TraceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(mappedBy = "address")
-    @JsonIgnore
-    @JsonManagedReference
-    private Customer customer;
-
     @Column
     private String state;
 
@@ -29,5 +22,5 @@ public class Address extends TraceEntity {
     private String city;
 
     @Column
-    private String address;
+    private String street;
 }
