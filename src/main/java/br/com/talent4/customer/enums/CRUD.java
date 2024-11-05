@@ -13,5 +13,13 @@ public enum CRUD {
     CRUD(int value) {
         this.value = value;
     }
+    static public CRUD getByID(int id) {
+        for(CRUD e : values()){
+            if(e.value == id){
+                return e;
+            }
+        }
+        return null;
+    }
 
 }

@@ -1,6 +1,7 @@
 package br.com.talent4.customer.service;
 
 import br.com.talent4.customer.dto.CustomerDto;
+import br.com.talent4.customer.dto.CustomerHistoryDto;
 import br.com.talent4.customer.repository.CustomerReadRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,14 @@ public class CustomerReadService {
 
     public Page<CustomerDto> findCustomers(String orderBy, String state, Pageable pageable) {
         Page<CustomerDto> page = repository.findCustomers(orderBy, state, pageable);
-        log.info("Busca finalizada. Total de registros: " + page.getTotalElements());
+        log.info("Busca por cliente finalizada. Total de registros: " + page.getTotalElements());
         return  page;
+    }
+
+    public Page<CustomerHistoryDto> findCustomerHistory(long customerId, Pageable pageable) {
+
+        Page<CustomerHistoryDto> page = repository.findCustomersHistory(customerId, pageable);
+        log.info("Busca por historico finalizada. Total de registros: " + page.getTotalElements());
+        return page;
     }
 }

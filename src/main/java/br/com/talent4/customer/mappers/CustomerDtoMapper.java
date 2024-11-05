@@ -1,6 +1,5 @@
 package br.com.talent4.customer.mappers;
 
-import br.com.talent4.customer.domain.Customer;
 import br.com.talent4.customer.dto.AddressResponseDto;
 import br.com.talent4.customer.dto.CustomerDto;
 import org.springframework.jdbc.core.RowMapper;

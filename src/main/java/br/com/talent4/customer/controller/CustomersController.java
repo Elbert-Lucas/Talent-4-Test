@@ -1,6 +1,7 @@
 package br.com.talent4.customer.controller;
 
 import br.com.talent4.customer.dto.CustomerDto;
+import br.com.talent4.customer.dto.CustomerHistoryDto;
 import br.com.talent4.customer.service.CustomerModifyService;
 import br.com.talent4.customer.service.CustomerReadService;
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
@@ -32,12 +33,19 @@ public class CustomersController {
     }
 
 
-    @GetMapping(value = "/list")
+    @GetMapping(value = "")
     ResponseEntity<Page<CustomerDto>> findCustomers(@RequestParam(name = "orderBy", defaultValue = "name") String orderBy,
                                                     @RequestParam(required = false) String state,
                                                     Pageable pageable) throws SQLSyntaxErrorException {
         log.info("Iniciando busca por clientes! Ordenado por: " + orderBy + ", Estado: " + state);
         return new ResponseEntity<>(readService.findCustomers(orderBy, state, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/history/{id}")
+    ResponseEntity<Page<CustomerHistoryDto>> findCustomerHistory(@PathVariable("id") long customerId,
+                                                                 Pageable pageable) throws SQLSyntaxErrorException {
+        log.info("Iniciando busca de historico do cliente! Id: " + customerId);
+        return new ResponseEntity<>(readService.findCustomerHistory(customerId, pageable), HttpStatus.OK);
     }
 
 
