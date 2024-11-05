@@ -11,7 +11,8 @@ public class StateValidator implements ConstraintValidator<State, String>{
     private final String[] BRAZILIAN_STATES = {
             "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
             "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI",
-            "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
+            "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+    };
 
     @Override
     public boolean isValid(String state, ConstraintValidatorContext constraintValidatorContext) {

@@ -1,8 +1,12 @@
 package br.com.talent4.handler;
 
 import br.com.talent4.handler.dto.ErrorResponseDto;
+import br.com.talent4.shared.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -12,16 +16,20 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler  {
 
+    private final br.com.talent4.shared.util.MessageUtil messageUtil;
+
+    @Autowired
+    public GlobalExceptionHandler(MessageUtil messageUtil, MessageSource messageSource) {
+        this.messageUtil = messageUtil;
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -43,12 +51,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler  {
     public ResponseEntity<ErrorResponseDto> handleDuplicateKey(DuplicateKeyException ex){
         String message = ex.getCause().getMessage();
         if(message.contains("Duplicate entry") && message.contains("for key 'tb_customer.email'")){
-            message = "O email enviado já esta em uso";
+            message = messageUtil.getMessage("duplicate.email");
         }
-
         log.error("Erro durante a request: " +  message);
 
         return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.BAD_REQUEST.toString(), HttpStatus.BAD_REQUEST.value(), List.of(message)),
                                     HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<ErrorResponseDto> handleEmptyResult(EmptyResultDataAccessException ex){
+        log.error("Erro durante a request: " +  ex.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.NOT_FOUND.toString(),
+                                    HttpStatus.NOT_FOUND.value(),
+                                    List.of(messageUtil.getMessage("notFound.data"))),
+                                    HttpStatus.NOT_FOUND);
     }
 }
