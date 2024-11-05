@@ -1,15 +1,16 @@
 package br.com.talent4.customer.domain;
 
 
-import br.com.talent4.shared.domain.TraceEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 
 @Entity(name = "TB_ADDRESS")
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @ToString
-public class Address extends TraceEntity {
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,13 +15,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Audited
 @SuperBuilder
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 public class TraceEntity implements Serializable {
     @Column(updatable = false)
     @CreationTimestamp
-    @NotAudited
     private LocalDateTime createdAt;
 }

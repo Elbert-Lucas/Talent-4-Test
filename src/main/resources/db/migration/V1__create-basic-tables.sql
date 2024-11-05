@@ -1,7 +1,7 @@
-CREATE TABLE REVINFO (
-    rev INT NOT NULL AUTO_INCREMENT,
-    revtimestamp TIMESTAMP,
-    PRIMARY KEY (rev)
+CREATE TABLE TB_AUDITION (
+    id INT NOT NULL AUTO_INCREMENT,
+    description VARCHAR(10) NOT NULL UNIQUE,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE TB_ADDRESS (
@@ -14,34 +14,36 @@ CREATE TABLE TB_ADDRESS (
 
 CREATE TABLE TB_ADDRESS_AUD (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    rev INT NOT NULL,
-    revtype TINYINT,
+    address_id bigint(20) unsigned NOT NULL,
+    change_type INT NOT NULL,
     state VARCHAR(50) NOT NULL,
     city VARCHAR(50) NOT NULL,
     street VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id, rev),
-    CONSTRAINT fk_address_aud_rev FOREIGN KEY (rev) REFERENCES REVINFO(rev),
-    CONSTRAINT fk_address_aud FOREIGN KEY (id) REFERENCES TB_ADDRESS(id)
+    created_at TIMESTAMP NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_address_aud_change_type_fk FOREIGN KEY (change_type) REFERENCES TB_AUDITION(id),
+    CONSTRAINT fk_address_aud_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id)
 );
 
 CREATE TABLE TB_CUSTOMER (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     name VARCHAR(75) NOT NULL,
     email VARCHAR(75) NOT NULL UNIQUE,
-    address_id bigint(20) unsigned NOT NULL,
+    address_id  bigint(20) unsigned NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY(id),
     CONSTRAINT tb_customer_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id)
 );
 CREATE TABLE TB_CUSTOMER_AUD (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    rev INT NOT NULL,
-    revtype TINYINT,
+    customer_id bigint(20) unsigned NOT NULL,
+    change_type INT NOT NULL,
     name VARCHAR(75) NOT NULL,
     email VARCHAR(75) NOT NULL,
     address_id bigint(20) unsigned,
     created_at TIMESTAMP NOT NULL,
-    PRIMARY KEY (id, rev),
-    CONSTRAINT fk_customers_aud_rev FOREIGN KEY (rev) REFERENCES REVINFO(rev),
-    CONSTRAINT fk_customers_aud FOREIGN KEY (id) REFERENCES TB_CUSTOMER(id)
+    PRIMARY KEY (id),
+    CONSTRAINT fk_customer_aud_change_type_fk FOREIGN KEY (change_type) REFERENCES TB_AUDITION(id),
+    CONSTRAINT fk_customer_aud_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS_AUD(id),
+    CONSTRAINT tb_customer_aud_fk FOREIGN KEY (customer_id) REFERENCES TB_CUSTOMER(id)
 );
