@@ -32,6 +32,7 @@ public class CustomerDto {
 
     @JsonView({CreateCustomerView.class})
     @NotNull
+    @Valid
     private AddressRequestDto address;
 
 }

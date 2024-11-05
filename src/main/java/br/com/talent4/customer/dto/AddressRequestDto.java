@@ -1,5 +1,6 @@
 package br.com.talent4.customer.dto;
 
+import br.com.talent4.shared.annotation.State;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,7 +14,7 @@ import lombok.ToString;
 public class AddressRequestDto {
 
     @JsonView({CustomerDto.CreateCustomerView.class})
-    @NotEmpty(message = "{invalid.state}")
+    @State(message = "{invalid.state}")
     private String state;
 
     @JsonView({CustomerDto.CreateCustomerView.class})
