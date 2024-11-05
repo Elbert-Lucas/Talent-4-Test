@@ -17,7 +17,7 @@ public class Customer extends TraceEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)

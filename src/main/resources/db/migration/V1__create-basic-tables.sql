@@ -24,16 +24,16 @@ CREATE TABLE TB_ADDRESS_AUD (
     CONSTRAINT fk_address_aud FOREIGN KEY (id) REFERENCES TB_ADDRESS(id)
 );
 
-CREATE TABLE TB_CUSTOMERS (
+CREATE TABLE TB_CUSTOMER (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     name VARCHAR(75) NOT NULL,
-    email VARCHAR(75) NOT NULL,
+    email VARCHAR(75) NOT NULL UNIQUE,
     address_id bigint(20) unsigned NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY(id),
-    CONSTRAINT tb_customers_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id)
+    CONSTRAINT tb_customer_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id)
 );
-CREATE TABLE TB_CUSTOMERS_AUD (
+CREATE TABLE TB_CUSTOMER_AUD (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     rev INT NOT NULL,
     revtype TINYINT,
@@ -43,5 +43,5 @@ CREATE TABLE TB_CUSTOMERS_AUD (
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id, rev),
     CONSTRAINT fk_customers_aud_rev FOREIGN KEY (rev) REFERENCES REVINFO(rev),
-    CONSTRAINT fk_customers_aud FOREIGN KEY (id) REFERENCES TB_CUSTOMERS(id)
+    CONSTRAINT fk_customers_aud FOREIGN KEY (id) REFERENCES TB_CUSTOMER(id)
 );
