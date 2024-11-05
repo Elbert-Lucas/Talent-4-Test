@@ -1,10 +1,9 @@
 package br.com.talent4.customer.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Date;
-
+@Getter @Setter
 public class AddressResponseDto extends AddressRequestDto{
-    private Integer id;
-    private Date date;
+    private Long id;
 }

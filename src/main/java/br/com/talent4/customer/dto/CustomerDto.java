@@ -20,17 +20,20 @@ public class CustomerDto {
     public interface CreateCustomerView {};
     public interface ListCustomerView {};
 
-    @JsonView({CreateCustomerView.class})
+    @JsonView({ListCustomerView.class})
+    private Long id;
+
+    @JsonView({CreateCustomerView.class, ListCustomerView.class})
     @NotEmpty
     @Size(min = 3, message = "{minimumSize.name}")
     private String name;
 
-    @JsonView({CreateCustomerView.class})
+    @JsonView({CreateCustomerView.class, ListCustomerView.class})
     @NotEmpty
     @Email(message = "{invalid.email}")
     private String email;
 
-    @JsonView({CreateCustomerView.class})
+    @JsonView({CreateCustomerView.class, ListCustomerView.class})
     @NotNull
     @Valid
     private AddressRequestDto address;

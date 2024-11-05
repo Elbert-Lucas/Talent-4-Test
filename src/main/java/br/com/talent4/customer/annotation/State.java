@@ -1,6 +1,6 @@
-package br.com.talent4.shared.annotation;
+package br.com.talent4.customer.annotation;
 
-import br.com.talent4.shared.validator.StateValidator;
+import br.com.talent4.customer.validator.StateValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLSyntaxErrorException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -58,6 +59,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler  {
         return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.BAD_REQUEST.toString(), HttpStatus.BAD_REQUEST.value(), List.of(message)),
                                     HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(SQLSyntaxErrorException.class)
+    public ResponseEntity<ErrorResponseDto> handleSQLSyntaxError(SQLSyntaxErrorException ex) {
+
+        String message = ex.getLocalizedMessage();
+        if(message.contains("Unknown column") && message.contains("in 'order clause'")){
+            message = messageUtil.getMessage("invalid.order");
+        }
+
+        log.error("Erro durante a request: " +  ex.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.BAD_REQUEST.toString(), HttpStatus.BAD_REQUEST.value(), List.of(message)),
+                HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<ErrorResponseDto> handleEmptyResult(EmptyResultDataAccessException ex){
         log.error("Erro durante a request: " +  ex.getMessage());
