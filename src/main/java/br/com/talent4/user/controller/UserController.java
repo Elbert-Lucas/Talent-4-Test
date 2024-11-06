@@ -1,9 +1,9 @@
 package br.com.talent4.user.controller;
 
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
-import br.com.talent4.shared.dto.dto.CredentialsDto;
-import br.com.talent4.shared.dto.dto.LoginDTO;
-import br.com.talent4.shared.dto.dto.RegisterUserDTO;
+import br.com.talent4.user.dto.CredentialsDto;
+import br.com.talent4.user.dto.LoginDTO;
+import br.com.talent4.user.dto.RegisterUserDTO;
 import br.com.talent4.user.controller.swagger.UserControllerSwagger;
 import br.com.talent4.user.service.AuthenticationService;
 import br.com.talent4.shared.dto.RefreshTokenDTO;

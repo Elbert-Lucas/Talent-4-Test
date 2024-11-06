@@ -2,7 +2,7 @@ package br.com.talent4.user.service;
 
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
 import br.com.talent4.shared.util.MessageUtil;
-import br.com.talent4.shared.dto.dto.RegisterUserDTO;
+import br.com.talent4.user.dto.RegisterUserDTO;
 import br.com.talent4.user.exception.InvalidConfirmPasswordException;
 import br.com.talent4.user.repository.UserModifyRepository;
 import org.springframework.beans.factory.annotation.Autowired;

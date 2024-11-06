@@ -1,13 +1,12 @@
 package br.com.talent4.shared.service;
 
-import br.com.talent4.shared.util.MessageUtil;
 import br.com.talent4.shared.exception.InvalidTokenException;
+import br.com.talent4.shared.util.MessageUtil;
 import br.com.talent4.user.repository.UserReadRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

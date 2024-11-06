@@ -9,7 +9,6 @@ import br.com.talent4.shared.dto.CreatedMessageResponseDto;
 import br.com.talent4.shared.dto.DeletedMessageResponse;
 import br.com.talent4.shared.dto.EditedMessageResponseDto;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

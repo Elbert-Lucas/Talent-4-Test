@@ -1,4 +1,4 @@
-package br.com.talent4.shared.dto.dto;
+package br.com.talent4.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
