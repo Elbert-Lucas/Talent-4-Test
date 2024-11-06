@@ -53,7 +53,6 @@ public class CustomerReadRepository {
     }
 
     public Page<CustomerHistoryDto> findCustomersHistory(Long customerId, Pageable pageable) {
-        System.out.println(FIND_CUSTOMERS_HISTORY + PAGEABLE);
         List<CustomerHistoryDto> customers = jdbcTemplate.query(
                 FIND_CUSTOMERS_HISTORY + PAGEABLE,
                 new Object[]{customerId, pageable.getPageSize(), pageable.getOffset()},

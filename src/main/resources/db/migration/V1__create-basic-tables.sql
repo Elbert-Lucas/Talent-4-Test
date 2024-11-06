@@ -21,8 +21,7 @@ CREATE TABLE TB_ADDRESS_AUD (
     street VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT fk_address_aud_change_type_fk FOREIGN KEY (change_type) REFERENCES TB_AUDITION(id),
-    CONSTRAINT fk_address_aud_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id)
+    CONSTRAINT fk_address_aud_change_type_fk FOREIGN KEY (change_type) REFERENCES TB_AUDITION(id)
 );
 
 CREATE TABLE TB_CUSTOMER (
@@ -32,7 +31,7 @@ CREATE TABLE TB_CUSTOMER (
     address_id  bigint(20) unsigned NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY(id),
-    CONSTRAINT tb_customer_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id)
+    CONSTRAINT tb_customer_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id) ON DELETE CASCADE
 );
 CREATE TABLE TB_CUSTOMER_AUD (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -44,6 +43,5 @@ CREATE TABLE TB_CUSTOMER_AUD (
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_customer_aud_change_type_fk FOREIGN KEY (change_type) REFERENCES TB_AUDITION(id),
-    CONSTRAINT fk_customer_aud_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS_AUD(id),
-    CONSTRAINT tb_customer_aud_fk FOREIGN KEY (customer_id) REFERENCES TB_CUSTOMER(id)
+    CONSTRAINT fk_customer_aud_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS_AUD(id)
 );
