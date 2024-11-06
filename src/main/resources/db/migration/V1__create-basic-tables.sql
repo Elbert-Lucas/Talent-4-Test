@@ -41,7 +41,7 @@ CREATE TABLE TB_CUSTOMER_AUD (
     change_type INT NOT NULL,
     name VARCHAR(75) NOT NULL,
     email VARCHAR(75) NOT NULL,
-    address_id bigint(20) unsigned,
+    address_id bigint(20) unsigned NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_customer_aud_change_type_fk FOREIGN KEY (change_type) REFERENCES TB_AUDITION(id),

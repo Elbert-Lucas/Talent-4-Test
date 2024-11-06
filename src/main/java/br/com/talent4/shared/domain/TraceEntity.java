@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

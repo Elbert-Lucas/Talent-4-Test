@@ -1,0 +1,21 @@
+CREATE TABLE TB_USER(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    name VARCHAR(75) NOT NULL,
+    email VARCHAR(75) NOT NULL UNIQUE,
+    password VARCHAR(75) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    PRIMARY KEY(id)
+);
+
+ALTER TABLE TB_CUSTOMER
+ADD last_author bigint(20) unsigned NOT NULL;
+
+ALTER TABLE TB_CUSTOMER
+ADD CONSTRAINT fk_customer_last_author_fk FOREIGN KEY (last_author) REFERENCES TB_USER(id);
+
+
+ALTER TABLE TB_CUSTOMER_AUD
+ADD author bigint(20) unsigned NOT NULL;
+
+ALTER TABLE TB_CUSTOMER_AUD
+ADD CONSTRAINT fk_customer_aud_author_fk FOREIGN KEY (author) REFERENCES TB_USER(id);

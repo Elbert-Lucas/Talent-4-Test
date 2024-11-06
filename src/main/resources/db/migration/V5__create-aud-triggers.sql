@@ -39,7 +39,7 @@ END;
 -- Triggers para auditoria de "customer" e "address" após DELETE
 
 CREATE TRIGGER aud_address_delete
-BEFORE DELETE ON TB_ADDRESS
+AFTER DELETE ON TB_ADDRESS
 FOR EACH ROW
 BEGIN
     INSERT INTO TB_ADDRESS_AUD (address_id, change_type, state, city, street, created_at)

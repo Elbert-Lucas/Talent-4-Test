@@ -2,6 +2,7 @@ package br.com.talent4.handler;
 
 import br.com.talent4.handler.dto.ErrorResponseDto;
 import br.com.talent4.shared.util.MessageUtil;
+import br.com.talent4.user.exception.InvalidConfirmPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -51,7 +52,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler  {
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<ErrorResponseDto> handleDuplicateKey(DuplicateKeyException ex){
         String message = ex.getCause().getMessage();
-        if(message.contains("Duplicate entry") && message.contains("for key 'tb_customer.email'")){
+        if(message.contains("Duplicate entry")
+            && (message.contains("for key 'tb_customer.email'") || message.contains("for key 'tb_user.email'") )){
             message = messageUtil.getMessage("duplicate.email");
         }
         log.error("Erro durante a request: " +  message);
@@ -81,5 +83,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler  {
                                     HttpStatus.NOT_FOUND.value(),
                                     List.of(messageUtil.getMessage("notFound.data"))),
                                     HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidConfirmPasswordException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidConfirmPassword(InvalidConfirmPasswordException ex){
+        log.error("Erro durante a request: " +  ex.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.BAD_REQUEST.toString(),
+                HttpStatus.BAD_REQUEST.value(),
+                List.of(messageUtil.getMessage("invalid.confirmPassword"))),
+                HttpStatus.BAD_REQUEST);
     }
 }
