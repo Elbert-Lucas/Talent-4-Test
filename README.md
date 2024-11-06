@@ -2,22 +2,26 @@
 
 # Instruções
 
-1 - Antes de iniciar o projeto você deve executar manualmente o script SQL abaixo. Certifique-se de mudar o nome do schema no script
-e também  nas VM Options: 
-###  CREATE DATABASE "nome schema";
+### 1 - Antes de iniciar o projeto você deve executar manualmente o script SQL abaixo. Certifique-se de mudar o nome do schema no script e também  nas VM Options: 
+CREATE DATABASE "nome schema";
 
-2 - Em seguida deve-se configurar as VM options:
+<br/>
 
--DSPRING_PORT=8080 \
--DDB_PORT= "PORTA DO SEU BANCO DE DADOS MYSQL" \
--DDB_SCHEMA= "nome schema" \
--DDB_USER= "SEU USUARIO DO BANCO DE DADOS MYSQL" \
--DDB_PASSWORD= "A SENHA DO SEU BANCO DE DADOS MYSQL"\
+### 2 - Em seguida deve-se configurar as VM options:
+<br/>
+
+-DSPRING_PORT=8080 <br />
+-DDB_PORT= "PORTA DO SEU BANCO DE DADOS MYSQL"  <br />
+-DDB_SCHEMA= "nome schema"  <br />
+-DDB_USER= "SEU USUARIO DO BANCO DE DADOS MYSQL"  <br />
+-DDB_PASSWORD= "A SENHA DO SEU BANCO DE DADOS MYSQL" <br />
 -DJWT_SECRET=hQchrJOpB5U3/lbT6c2sMTDx6WnABLmuKc12QBma0CwCFpu8qUyO+AlnGR2qMDl9
 
+<br/>
 
-3 - A aplicação possui documentação swagger no endpoint: http://localhost:8080/talent4/api/v1/swagger-ui/index.html e 
-também possui uma collection e enviroment Postman na pasta "postman" que esta no diretorio root do projeto.
+### 3 - A aplicação possui documentação swagger no endpoint: http://localhost:8080/talent4/api/v1/swagger-ui/index.html e também possui uma collection e enviroment Postman na pasta "postman" que esta no diretorio root do projeto.
+
+<br/>
 
 ## Sobre
 
