@@ -1,11 +1,12 @@
 package br.com.talent4.user.controller;
 
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
-import br.com.talent4.user.controller.dto.CredentialsDto;
-import br.com.talent4.user.controller.dto.LoginDTO;
-import br.com.talent4.user.controller.dto.RegisterUserDTO;
+import br.com.talent4.shared.dto.dto.CredentialsDto;
+import br.com.talent4.shared.dto.dto.LoginDTO;
+import br.com.talent4.shared.dto.dto.RegisterUserDTO;
+import br.com.talent4.user.controller.swagger.UserControllerSwagger;
 import br.com.talent4.user.service.AuthenticationService;
-import br.com.talent4.user.service.RefreshTokenDTO;
+import br.com.talent4.shared.dto.RefreshTokenDTO;
 import br.com.talent4.user.service.UserModifyService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @Slf4j
-public class UserController {
+public class UserController implements UserControllerSwagger {
 
     private final UserModifyService userModifyService;
     private final AuthenticationService authenticationService;
@@ -41,5 +42,10 @@ public class UserController {
     public ResponseEntity<CredentialsDto> login(@RequestBody @Valid LoginDTO loginDTO){
         log.info("Inciando o login do usuario. Email: " + loginDTO.getEmail());
         return new ResponseEntity<>(authenticationService.doLogin(loginDTO), HttpStatus.OK);
+    }
+    @PostMapping("/refresh-token")
+    public ResponseEntity<CredentialsDto> refreshToken(@RequestBody RefreshTokenDTO refreshToken){
+        log.info("Fazendo o refresh do token. Refresh-token: " + refreshToken.getRefreshToken());
+        return new ResponseEntity<>(authenticationService.refreshToken(refreshToken), HttpStatus.OK);
     }
 }

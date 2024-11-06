@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "d062d683-4cbd-48e7-926c-bead2bc70c65",
+		"name": "Talent4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32455240"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "customer-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Cliente de teste !EDITADO\",\r\n    \"email\": \"emailDoClienteEditado@hotmail.com\",\r\n    \"address\": {\r\n        \"state\": \"ES\",\r\n        \"city\": \"Guarapari\",\r\n        \"street\": \"Santa Mônica, Rua Taurus, 223\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ROOT}}/customers/edit",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"customers",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Cliente de teste\",\r\n    \"email\": \"emailDoCliente@hotmail.com\",\r\n    \"address\": {\r\n        \"state\": \"MA\",\r\n        \"city\": \"São Luís\",\r\n        \"street\": \"Cohama, Rua Adelino Teixeira, 123\"\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ROOT}}/customers/create",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"customers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list-customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ROOT}}/customers?orderBy=customer.name",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"customers"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "customer.name"
+								},
+								{
+									"key": "state",
+									"value": "MA",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list-customer-history",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ROOT}}/customers/history/1",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"customers",
+								"history",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ROOT}}/customers/delete/1",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"customers",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Usuario ADMIN\",\r\n    \"email\": \"usuario@hotmail.com\",\r\n    \"password\": \"Senha12345\",\r\n    \"confirmPassword\": \"Senha12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ROOT}}/user/register",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody = pm.response.json();\r",
+									"pm.environment.set(\"TOKEN\", responseBody.token);\r",
+									"pm.environment.set(\"REFRESH_TOKEN\", responseBody[\"refresh_token\"]);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\": \"{{REFRESH_TOKEN}}\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ROOT}}/user/refresh-token",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"user",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody = pm.response.json();\r",
+									"pm.environment.set(\"TOKEN\", responseBody.token);\r",
+									"pm.environment.set(\"REFRESH_TOKEN\", responseBody[\"refresh_token\"]);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"usuario@hotmail.com\",\r\n    \"password\": \"Senha12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ROOT}}/user/login",
+							"host": [
+								"{{ROOT}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
