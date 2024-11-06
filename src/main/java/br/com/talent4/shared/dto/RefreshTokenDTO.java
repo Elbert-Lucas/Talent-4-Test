@@ -1,4 +1,4 @@
-package br.com.talent4.user.service;
+package br.com.talent4.shared.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

@@ -22,15 +22,23 @@ public class CustomerReadRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private final String FIND_CUSTOMERS = " SELECT * FROM tb_customer customer LEFT JOIN tb_address address ON address.id = customer.address_id ";
+    private final String FIND_CUSTOMERS = " SELECT * FROM tb_customer customer " +
+            " LEFT JOIN tb_address address ON address.id = customer.address_id " +
+            " LEFT JOIN tb_user author ON author.id = customer.last_author ";
+
     private final String WHERE_STATE = " WHERE address.state = '?' " ;
     private final String ORDER_BY = " ORDER BY ? ";
     private final String PAGEABLE = " LIMIT ? OFFSET ? ";
     private final String COUNT_TOTAL = " SELECT COUNT(*) FROM tb_customer ";
 
-    private final String FIND_CUSTOMERS_HISTORY = " SELECT * FROM tb_customer_aud customer LEFT JOIN tb_address_aud address ON address.id = customer.address_id  WHERE customer_id = ? ORDER BY customer.created_at DESC ";
+    private final String FIND_CUSTOMERS_HISTORY = " SELECT * FROM tb_customer_aud customer " +
+            " LEFT JOIN tb_address_aud address ON address.id = customer.address_id " +
+            " LEFT JOIN tb_user user ON user.id = customer.author" +
+            " WHERE customer_id = ? ORDER BY customer.created_at DESC ";
 
-    private final String[] VALID_ORDERS = {"customer.id", "name", "email", "created_at", "address.id", "state", "city", "street"};
+    private final String[] VALID_ORDERS = {"customer.id", "customer.name", "customer.email", "created_at",
+                                           "address.id", "state", "city", "street",
+                                           "author.name", "author.email"};
 
     @Autowired
     public CustomerReadRepository(JdbcTemplate jdbcTemplate) {
@@ -40,7 +48,6 @@ public class CustomerReadRepository {
     public Page<CustomerDto> findCustomers(String orderBy, String state, Pageable pageable) {
 
         final String finalQuery = buildSearchFinalQuery(orderBy, state);
-
         List<CustomerDto> customers = jdbcTemplate.query(
                 finalQuery.toString(),
                 new Object[]{pageable.getPageSize(), pageable.getOffset()},

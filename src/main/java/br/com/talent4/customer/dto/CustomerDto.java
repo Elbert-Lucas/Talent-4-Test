@@ -28,6 +28,10 @@ public class CustomerDto {
     @Size(min = 3, message = "{minimumSize.name}")
     private String name;
 
+    @JsonProperty("last_author")
+    @JsonView({ListCustomerView.class})
+    private AuthorDto lastAuthor;
+
     @JsonView({CreateCustomerView.class, ListCustomerView.class})
     @NotEmpty
     @Email(message = "{invalid.email}")

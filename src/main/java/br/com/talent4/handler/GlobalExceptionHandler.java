@@ -1,12 +1,15 @@
 package br.com.talent4.handler;
 
 import br.com.talent4.handler.dto.ErrorResponseDto;
+import br.com.talent4.shared.exception.InvalidTokenException;
 import br.com.talent4.shared.util.MessageUtil;
 import br.com.talent4.user.exception.UserBaseException;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -82,5 +85,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler  {
                 ex.getStatusCode().value(),
                 List.of(ex.getReason())),
                 ex.getStatusCode());
+    }
+
+    @ExceptionHandler({MalformedJwtException.class, InvalidTokenException.class})
+    public ResponseEntity<ErrorResponseDto> handlerJwtException(Exception ex){
+        log.error("Erro durante a validação do token " +  ex.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.UNAUTHORIZED.toString(),
+                                    HttpStatus.UNAUTHORIZED.value(),
+                                    List.of(messageUtil.getMessage("invalid.token"))),
+                                    HttpStatus.UNAUTHORIZED);
+
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<ErrorResponseDto>  handlerEmptyResultData(EmptyResultDataAccessException ex){
+        log.error("Erro durante a request: " +  ex.getCause());
+
+        return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.NOT_FOUND.toString(), HttpStatus.NOT_FOUND.value(),
+                                    List.of(messageUtil.getMessage("notFound.data"))), HttpStatus.NOT_FOUND);
     }
 }

@@ -1,6 +1,6 @@
 package br.com.talent4.user.repository;
 
-import br.com.talent4.user.controller.dto.RegisterUserDTO;
+import br.com.talent4.shared.dto.dto.RegisterUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

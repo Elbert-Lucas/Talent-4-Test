@@ -1,17 +1,14 @@
 package br.com.talent4.customer.service;
 
-import br.com.talent4.customer.domain.Address;
-import br.com.talent4.customer.domain.Customer;
 import br.com.talent4.customer.dto.CustomerDto;
 import br.com.talent4.customer.repository.CustomerModifyRepository;
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
 import br.com.talent4.shared.dto.DeletedMessageResponse;
 import br.com.talent4.shared.dto.EditedMessageResponseDto;
-import br.com.talent4.shared.dto.MessageResponseDto;
 import br.com.talent4.shared.util.MessageUtil;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +43,7 @@ public class CustomerModifyService {
     @Transactional
     public DeletedMessageResponse deleteCustomer(long customerId) {
         int rowsAffected = repository.deleteCustomer(customerId);
+        if(rowsAffected == 0) throw new EmptyResultDataAccessException(1);
         log.info("Usuario deletado! Numero de linhas afetadas: " + rowsAffected);
         return new DeletedMessageResponse(messageUtil.getMessage("customer.deleted"));
     }

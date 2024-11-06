@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
@@ -17,12 +19,13 @@ public class CustomerModifyRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
-    private final String CREATE_COSTUMER = "INSERT INTO tb_customer(name, email, address_id, created_at) VALUES (?, ?, ?, ?)";
-    private final String UPDATE_COSTUMER = "UPDATE tb_customer SET name = ?, email = ?, address_id = ? WHERE id = ?";
-    private final String DELETE_COSTUMER = " DELETE FROM tb_customer WHERE id = ? ";
-    private final String CREATE_ADDRESS = "INSERT INTO tb_address(state, city, street) VALUES (?, ?, ?)";
-    private final String UPDATE_ADDRESS = "UPDATE tb_address SET state = ?, city = ?, street = ? WHERE id = ?";
-    private final String FIND_ADDRESS_BY_USER_ID = "SELECT address_id FROM tb_customer WHERE id = ?";
+    private final String CREATE_CUSTOMER = " INSERT INTO tb_customer(name, email, address_id, last_author, created_at) VALUES (?, ?, ?, ?, ?) ";
+    private final String UPDATE_CUSTOMER = " UPDATE tb_customer SET name = ?, email = ?, address_id = ?, last_author = ? WHERE id = ? ";
+    private final String SET_AUTHOR_DEL = " SET @author_of_del = ?  ";
+    private final String DELETE_CUSTOMER = " DELETE FROM tb_customer WHERE id = ? ";
+    private final String CREATE_ADDRESS = " INSERT INTO tb_address(state, city, street) VALUES (?, ?, ?) ";
+    private final String UPDATE_ADDRESS = " UPDATE tb_address SET state = ?, city = ?, street = ? WHERE id = ? ";
+    private final String FIND_ADDRESS_BY_USER_ID = " SELECT address_id FROM tb_customer WHERE id = ? ";
 
 
     @Autowired
@@ -36,11 +39,12 @@ public class CustomerModifyRepository{
         long addressId = saveAddress(customer.getAddress());
 
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(CREATE_COSTUMER, new String[] {"id"});
+            PreparedStatement ps = connection.prepareStatement(CREATE_CUSTOMER, new String[] {"id"});
             ps.setString(1, customer.getName());
             ps.setString(2, customer.getEmail());
             ps.setLong(3, addressId);
-            ps.setTimestamp(4, Timestamp.from(Instant.now()));
+            ps.setLong(4, getAuthor());
+            ps.setTimestamp(5, Timestamp.from(Instant.now()));
             return ps;
         }, keyHolder);
 
@@ -63,8 +67,8 @@ public class CustomerModifyRepository{
     public int updateCustomer(long customerId, CustomerDto customerDto) {
         Long addressId = updateAddress(customerId, customerDto.getAddress());
 
-        int rowsAffected = jdbcTemplate.update(UPDATE_COSTUMER, customerDto.getName(),
-                customerDto.getEmail(), addressId, customerId);
+        int rowsAffected = jdbcTemplate.update(UPDATE_CUSTOMER, customerDto.getName(),
+                customerDto.getEmail(), addressId,getAuthor(), customerId);
 
         return rowsAffected;
     }
@@ -76,7 +80,13 @@ public class CustomerModifyRepository{
     }
 
     public int deleteCustomer(long customerId) {
-        return jdbcTemplate.update(DELETE_COSTUMER, customerId);
+        jdbcTemplate.update(SET_AUTHOR_DEL, getAuthor());
+        return jdbcTemplate.update(DELETE_CUSTOMER, customerId);
+    }
+    private Long getAuthor(){
+        return (Long) ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest()
+                .getAttribute("user");
     }
 
 }

@@ -23,11 +23,10 @@ public class CustomerReadService {
     public Page<CustomerDto> findCustomers(String orderBy, String state, Pageable pageable) {
         Page<CustomerDto> page = repository.findCustomers(orderBy, state, pageable);
         log.info("Busca por cliente finalizada. Total de registros: " + page.getTotalElements());
-        return  page;
+        return page;
     }
 
     public Page<CustomerHistoryDto> findCustomerHistory(long customerId, Pageable pageable) {
-
         Page<CustomerHistoryDto> page = repository.findCustomersHistory(customerId, pageable);
         log.info("Busca por historico finalizada. Total de registros: " + page.getTotalElements());
         return page;

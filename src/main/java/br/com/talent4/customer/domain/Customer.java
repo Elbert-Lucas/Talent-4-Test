@@ -1,6 +1,7 @@
 package br.com.talent4.customer.domain;
 
 import br.com.talent4.shared.domain.TraceEntity;
+import br.com.talent4.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,8 @@ public class Customer extends TraceEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private User lastAuthor;
 }

@@ -1,4 +1,4 @@
-package br.com.talent4.user.controller.dto;
+package br.com.talent4.shared.dto.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

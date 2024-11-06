@@ -1,24 +1,23 @@
-package br.com.talent4.user.service;
+package br.com.talent4.shared.service;
 
 import br.com.talent4.user.domain.User;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class JwtCreationService {
-    @Value("${jwt.secret}")
-    private String secret;
-    private static final long USER_EXPIRATION_TIME = 1000L * 60 * 15; // 15 minutes
-    private static final long REFRESH_EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 15; // 15 days
+public class JwtCreationService extends JwtService{
 
+    private final JwtValidationService validationService;
+
+    @Autowired
+    public JwtCreationService(JwtValidationService validationService) {
+        this.validationService = validationService;
+    }
 
     public Map<String, String> createUserTokens(User user){
         return createUserTokens(user, createRefreshJwt(user));
@@ -70,8 +69,9 @@ public class JwtCreationService {
                 .compact();
     }
 
-    private SecretKey getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBytes);
+    public Map<String, String> refreshToken(String refreshJwt, User user){
+        validationService.validateRefreshToken(refreshJwt);
+        return createUserTokens(user, refreshJwt);
     }
+
 }

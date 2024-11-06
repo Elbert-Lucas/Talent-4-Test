@@ -21,6 +21,8 @@ public class CustomerHistoryDto {
 
     private String email;
 
+    private AuthorDto author;
+
     @JsonProperty("address")
     private AddressHistoryDto addressHistory;
 
