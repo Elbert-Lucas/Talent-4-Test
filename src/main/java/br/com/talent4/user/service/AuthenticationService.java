@@ -4,7 +4,7 @@ import br.com.talent4.shared.dto.RefreshTokenDTO;
 import br.com.talent4.shared.service.JwtCreationService;
 import br.com.talent4.shared.service.JwtValidationService;
 import br.com.talent4.shared.util.MessageUtil;
-import br.com.talent4.user.dto.CredentialsDto;
+import br.com.talent4.shared.dto.CredentialsDto;
 import br.com.talent4.user.dto.LoginDTO;
 import br.com.talent4.user.domain.User;
 import br.com.talent4.user.exception.InvalidPasswordException;

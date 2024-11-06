@@ -2,7 +2,7 @@ package br.com.talent4.user.controller.swagger;
 
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
 import br.com.talent4.shared.dto.RefreshTokenDTO;
-import br.com.talent4.user.dto.CredentialsDto;
+import br.com.talent4.shared.dto.CredentialsDto;
 import br.com.talent4.user.dto.LoginDTO;
 import br.com.talent4.user.dto.RegisterUserDTO;
 import io.swagger.v3.oas.annotations.Operation;
