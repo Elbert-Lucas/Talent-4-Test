@@ -1,4 +1,4 @@
-# Talent-4-Test
+# Talent-4-Test (JDK 17 e MySql)
 
 # Instruções
 
