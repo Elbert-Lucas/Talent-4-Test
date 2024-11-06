@@ -21,6 +21,7 @@ também possui uma collection e enviroment Postman na pasta "postman" que esta n
 
 ## Sobre
 
+* A aplicação usa Java 17, Spring 3.3.5 e MySql 8.3
 * A aplicação utiliza de FlyWay para versionamento do banco de dados
 * A aplicação usa autenticação JWT, antes de iniciar a utilizar você deve registrar um usuario
 * A aplicação utiliza de triggers para criar o historico de mudanças nos dados
