@@ -1,5 +1,6 @@
 package br.com.talent4.customer.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter @Setter
@@ -7,6 +8,7 @@ import lombok.*;
 @Builder
 public class AddressHistoryDto {
 
+    @JsonProperty("address_id")
     private Long addressId;
 
     private String state;
