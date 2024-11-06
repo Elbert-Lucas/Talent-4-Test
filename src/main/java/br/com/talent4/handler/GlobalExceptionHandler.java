@@ -2,12 +2,11 @@ package br.com.talent4.handler;
 
 import br.com.talent4.handler.dto.ErrorResponseDto;
 import br.com.talent4.shared.util.MessageUtil;
-import br.com.talent4.user.exception.InvalidConfirmPasswordException;
+import br.com.talent4.user.exception.UserBaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -75,23 +74,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler  {
                 HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity<ErrorResponseDto> handleEmptyResult(EmptyResultDataAccessException ex){
+    @ExceptionHandler(UserBaseException.class)
+    public ResponseEntity<ErrorResponseDto> handlerGeneralUserExceptions(UserBaseException ex){
         log.error("Erro durante a request: " +  ex.getMessage());
 
-        return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.NOT_FOUND.toString(),
-                                    HttpStatus.NOT_FOUND.value(),
-                                    List.of(messageUtil.getMessage("notFound.data"))),
-                                    HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(InvalidConfirmPasswordException.class)
-    public ResponseEntity<ErrorResponseDto> handleInvalidConfirmPassword(InvalidConfirmPasswordException ex){
-        log.error("Erro durante a request: " +  ex.getMessage());
-
-        return new ResponseEntity<>(new ErrorResponseDto(HttpStatus.BAD_REQUEST.toString(),
-                HttpStatus.BAD_REQUEST.value(),
-                List.of(messageUtil.getMessage("invalid.confirmPassword"))),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponseDto(ex.getStatusCode().toString(),
+                ex.getStatusCode().value(),
+                List.of(ex.getReason())),
+                ex.getStatusCode());
     }
 }

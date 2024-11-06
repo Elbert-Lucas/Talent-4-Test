@@ -16,7 +16,7 @@ public class UserModifyRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private final String CREATE_COSTUMER = "INSERT INTO tb_user(name, email, password, created_at) VALUES (?, ?, ?, ?)";
+    private final String CREATE_USER = "INSERT INTO tb_user(name, email, password, created_at) VALUES (?, ?, ?, ?)";
 
     @Autowired
     public UserModifyRepository(JdbcTemplate jdbcTemplate) {
@@ -28,7 +28,7 @@ public class UserModifyRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(CREATE_COSTUMER, new String[] {"id"});
+            PreparedStatement ps = connection.prepareStatement(CREATE_USER, new String[] {"id"});
             ps.setString(1, registerUserDTO.getName());
             ps.setString(2, registerUserDTO.getEmail());
             ps.setString(3, registerUserDTO.getPassword());
