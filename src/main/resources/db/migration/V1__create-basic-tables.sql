@@ -1,3 +1,5 @@
+SET time_zone = '-03:00';
+
 CREATE TABLE TB_AUDITION (
     id INT NOT NULL AUTO_INCREMENT,
     description VARCHAR(10) NOT NULL UNIQUE,

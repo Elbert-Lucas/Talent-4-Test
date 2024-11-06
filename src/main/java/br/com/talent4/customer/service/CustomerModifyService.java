@@ -5,6 +5,7 @@ import br.com.talent4.customer.domain.Customer;
 import br.com.talent4.customer.dto.CustomerDto;
 import br.com.talent4.customer.repository.CustomerModifyRepository;
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
+import br.com.talent4.shared.dto.DeletedMessageResponse;
 import br.com.talent4.shared.dto.EditedMessageResponseDto;
 import br.com.talent4.shared.dto.MessageResponseDto;
 import br.com.talent4.shared.util.MessageUtil;
@@ -40,5 +41,12 @@ public class CustomerModifyService {
         log.info("Usuario editado! Numero de linhas afetadas: " + rowsAffected);
         return new EditedMessageResponseDto(messageUtil.getMessage("customer.edited"));
 
+    }
+
+    @Transactional
+    public DeletedMessageResponse deleteCustomer(long customerId) {
+        int rowsAffected = repository.deleteCustomer(customerId);
+        log.info("Usuario deletado! Numero de linhas afetadas: " + rowsAffected);
+        return new DeletedMessageResponse(messageUtil.getMessage("customer.deleted"));
     }
 }

@@ -1,9 +1,10 @@
 package br.com.talent4.customer.dto;
 
 import br.com.talent4.customer.enums.CRUD;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
@@ -22,5 +23,6 @@ public class CustomerHistoryDto {
 
     private CRUD changeType;
 
-    private Timestamp date;
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime date;
 }

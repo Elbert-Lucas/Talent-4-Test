@@ -18,7 +18,7 @@ public class CustomerHistoryMapper implements RowMapper<CustomerHistoryDto> {
         customerHistory.setChangeType(CRUD.getByID(rs.getInt("change_type")));
         customerHistory.setName(rs.getString("name"));
         customerHistory.setEmail(rs.getString("email"));
-        customerHistory.setDate(rs.getTimestamp("customer.created_at"));
+        customerHistory.setDate(rs.getTimestamp("customer.created_at").toLocalDateTime());
 
         AddressHistoryDto addressHistory = new AddressHistoryDto();
         addressHistory.setAddressId(rs.getLong("address.address_id"));

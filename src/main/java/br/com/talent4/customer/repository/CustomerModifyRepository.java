@@ -24,6 +24,7 @@ public class CustomerModifyRepository{
 
     private final String CREATE_COSTUMER = "INSERT INTO tb_customer(name, email, address_id, created_at) VALUES (?, ?, ?, ?)";
     private final String UPDATE_COSTUMER = "UPDATE tb_customer SET name = ?, email = ?, address_id = ? WHERE id = ?";
+    private final String DELETE_COSTUMER = " DELETE FROM tb_customer WHERE id = ? ";
     private final String CREATE_ADDRESS = "INSERT INTO tb_address(state, city, street) VALUES (?, ?, ?)";
     private final String UPDATE_ADDRESS = "UPDATE tb_address SET state = ?, city = ?, street = ? WHERE id = ?";
     private final String FIND_ADDRESS_BY_USER_ID = "SELECT address_id FROM tb_customer WHERE id = ?";
@@ -78,4 +79,9 @@ public class CustomerModifyRepository{
         jdbcTemplate.update(UPDATE_ADDRESS, address.getState(), address.getCity(), address.getStreet(), id);
         return id;
     }
+
+    public int deleteCustomer(long customerId) {
+        return jdbcTemplate.update(DELETE_COSTUMER, customerId);
+    }
+
 }

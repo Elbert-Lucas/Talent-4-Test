@@ -5,6 +5,8 @@ import br.com.talent4.customer.dto.CustomerHistoryDto;
 import br.com.talent4.customer.service.CustomerModifyService;
 import br.com.talent4.customer.service.CustomerReadService;
 import br.com.talent4.shared.dto.CreatedMessageResponseDto;
+import br.com.talent4.shared.dto.DeletedMessageResponse;
+import br.com.talent4.shared.dto.EditedMessageResponseDto;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -57,10 +59,15 @@ public class CustomersController {
     };
 
     @PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> editCustomer(@RequestHeader("customer-id") long customerId,
-                                    @JsonView(CustomerDto.CreateCustomerView.class) @RequestBody @Valid CustomerDto customerDto){
+    ResponseEntity<EditedMessageResponseDto> editCustomer(@RequestHeader("customer-id") long customerId,
+                                                          @JsonView(CustomerDto.CreateCustomerView.class) @RequestBody @Valid CustomerDto customerDto){
         log.info("Iniciando edição de cliente! Id: " + customerId);
         return new ResponseEntity<>(modifyService.editCustomer(customerId, customerDto), HttpStatus.OK);
     };
 
+    @DeleteMapping(value = "/delete/{id}")
+    ResponseEntity<DeletedMessageResponse> deleteCustomer(@PathVariable("id") long customerId){
+        log.info("Iniciando deleção de cliente! Id: " + customerId);
+        return new ResponseEntity<>(modifyService.deleteCustomer(customerId), HttpStatus.OK);
+    };
 }
